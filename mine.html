@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mine</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+html,body{height:100%}
+
+body{
+    background:#fff;
+    display:flex;
+    flex-direction:column;
+}
+
+/* HEADER */
+.profile{
+    background:#000000;
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+}
+
+/* INFO */
+.info{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.info .box{
+    background:#a9a9a9;
+    padding:7px 16px;
+    font-weight:bold;
+    font-size:14px;
+    border-radius:999px;
+    width:fit-content;
+}
+
+/* AVATAR */
+.avatar-box{text-align:center}
+
+.avatar{
+    width:70px;
+    height:70px;
+    border-radius:85%;
+    background:#777;
+    overflow:hidden;
+}
+
+.avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.change-avatar{
+    margin-top:6px;
+    background:#9a9a9a;
+    padding:5px 12px;
+    font-size:12px;
+    border-radius:999px;
+}
+
+/* MENU */
+.menu{
+    padding:15px;
+}
+
+.menu-btn{
+    width:100%;
+    padding:14px 20px;
+    margin-bottom:12px;
+    background:#d9d9d9;
+    border:none;
+    font-weight:bold;
+    text-align:left;
+    border-radius:999px;
+    transition:transform .08s ease, background .08s ease;
+}
+
+/* EFEK HIDUP */
+.menu-btn:active{
+    transform:scale(0.97);
+    background:#cfcfcf;
+}
+
+/* NON-KLIK (SKOR POINT) */
+.menu-btn.disabled{
+    pointer-events:none;
+    background:#d9d9d9;
+}
+
+/* NAV */
+.nav{
+    margin-top:auto;
+    display:flex;
+    background:#bfbfbf;
+}
+
+.nav a{
+    flex:1;
+    padding:12px;
+    text-align:center;
+    text-decoration:none;
+    font-weight:bold;
+    color:#000;
+}
+
+.nav a.active{color:#ff7a00}
+</style>
+</head>
+
+<body>
+
+<div class="profile">
+    <div class="info">
+        <div class="box">ID AKUN : 955123</div>
+        <div class="box">SALDO AKUN : Rp 500,000,000</div>
+    </div>
+
+    <div class="avatar-box">
+        <div class="avatar">
+            <img id="avatarImg">
+        </div>
+        <div class="change-avatar" onclick="pickAvatar()">ganti avatar</div>
+        <input type="file" id="fileInput" accept="image/*" hidden>
+    </div>
+</div>
+
+<div class="menu">
+    <button class="menu-btn" onclick="go('akun.html')">PENGATURAN AKUN</button>
+    <button class="menu-btn" onclick="go('privasi.html')">PENGATURAN PRIVASI</button>
+    <button class="menu-btn" onclick="go('bank.html')">TAUTKAN AKUN BANK</button>
+    <button class="menu-btn" onclick="go('penarikan.html')">PENARIKAN</button>
+    <button class="menu-btn" onclick="go('deposit.html')">DEPOSIT</button>
+
+    <button class="menu-btn disabled">SKOR POINT : 100</button>
+
+    <!-- Tambahan tombol sesuai gambar -->
+    <button class="menu-btn" onclick="go('catatan-penarikan.html')">CATATAN PENARIKAN</button>
+    <button class="menu-btn" onclick="go('catatan-deposit.html')">CATATAN DEPOSIT</button>
+    <button class="menu-btn" onclick="go('verifikasi.html')">VERIFIKASI AKUN</button>
+    <button class="menu-btn" onclick="go('keamanan.html')">PENGATURAN KEAMANAN</button>
+    <button class="menu-btn" onclick="go('keluar.html')">KELUAR</button>
+</div>
+
+<div class="nav">
+    <a href="home.html">HOME</a>
+    <a href="order.html">ORDER</a>
+    <a href="mine.html" class="active">MINE</a>
+</div>
+
+<script>
+/* AVATAR */
+const img = document.getElementById("avatarImg");
+const input = document.getElementById("fileInput");
+
+const saved = localStorage.getItem("avatar");
+if(saved) img.src = saved;
+
+function pickAvatar(){
+    input.click();
+}
+
+input.onchange = ()=>{
+    const file = input.files[0];
+    if(file){
+        const r = new FileReader();
+        r.onload = e=>{
+            img.src = e.target.result;
+            localStorage.setItem("avatar", e.target.result);
+        };
+        r.readAsDataURL(file);
+    }
+};
+
+/* NAVIGASI */
+function go(page){
+    location.href = page;
+}
+</script>
+
+</body>
+</html>

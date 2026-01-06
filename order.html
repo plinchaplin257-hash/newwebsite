@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+html,body{
+    height:100%;
+}
+
+body{
+    background:#fff; /* PUTIH seperti gambar */
+    display:flex;
+    flex-direction:column;
+}
+
+/* HEADER */
+.header{
+    background:#000;
+    color:#fff;
+    text-align:center;
+    padding:15px;
+    font-weight:bold;
+}
+
+/* CONTENT */
+.content{
+    flex:1;
+    overflow-y:auto;
+}
+
+/* BOX PESANAN */
+.order-box{
+    background:#d9d9d9; /* abu-abu box */
+    padding:15px;
+}
+
+/* PEMBATAS PUTIH */
+.divider{
+    height:6px;
+    background:#fff;
+}
+
+/* ROW */
+.row{
+    display:flex;
+    font-size:14px;
+    margin:6px 0;
+}
+
+.label{
+    width:140px;
+}
+
+/* STATUS */
+.proses{ color:#d35400; font-weight:bold; }
+.berhasil{ color:#27ae60; font-weight:bold; }
+
+/* NAV */
+.nav{
+    display:flex;
+    background:#bfbfbf;
+}
+
+.nav a{
+    flex:1;
+    text-align:center;
+    padding:12px;
+    text-decoration:none;
+    font-weight:bold;
+    color:#000;
+}
+
+.nav a.active{
+    color:#ff7a00;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">CATATAN PESANAN</div>
+
+<div class="content" id="orderList">
+    <!-- Jika tidak ada pesanan, area ini tetap PUTIH -->
+</div>
+
+<div class="nav">
+    <a href="home.html">HOME</a>
+    <a href="order.html" class="active">ORDER</a>
+    <a href="mine.html">MINE</a>
+</div>
+
+<script>
+const orders = JSON.parse(localStorage.getItem("orders")) || [];
+const list = document.getElementById("orderList");
+
+orders.forEach((o,i)=>{
+    list.innerHTML += `
+        <div class="order-box">
+            <div class="row"><div class="label">Brand</div>: ${o.brand}</div>
+            <div class="row"><div class="label">Nomor pesanan</div>: ${o.id}</div>
+            <div class="row"><div class="label">Keuntungan</div>: Rp ${o.profit}</div>
+            <div class="row"><div class="label">Tanggal & Waktu</div>: ${o.time}</div>
+            <div class="row">
+                <div class="label">Status</div>:
+                <span class="${o.status==='Proses'?'proses':'berhasil'}">
+                    ${o.status}
+                </span>
+            </div>
+        </div>
+        ${i < orders.length-1 ? '<div class="divider"></div>' : ''}
+    `;
+});
+</script>
+
+</body>
+</html>

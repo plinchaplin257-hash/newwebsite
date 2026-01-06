@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="top-bar">
+    <img src="logo.png" class="logo">
+
+    <!-- Language Dropdown -->
+    <div class="lang-select">
+        <img id="flag" src="id.png">
+        <select id="language">
+            <option value="id">Indonesia</option>
+            <option value="en">English</option>
+            <option value="cn">中文</option>
+        </select>
+    </div>
+</div>
+
+<!-- LOGIN BOX -->
+<div class="login-box">
+    <h2 id="title">LOGIN</h2>
+
+    <input type="text" id="user" placeholder="Username">
+    <input type="password" id="pass" placeholder="Password">
+
+    <button id="loginBtn">MASUK</button>
+
+    <p id="registerText">
+        Belum punya akun?
+        <a href="register.html">Daftar</a>
+    </p>
+</div>
+
+<!-- CS -->
+<a href="https://wa.me/628123456789" class="cs-btn" id="csText">
+    Customer Service
+</a>
+
+<script>
+/* ================= MULTI LANGUAGE ================= */
+const text = {
+    id: {
+        title:"LOGIN",
+        user:"Username",
+        pass:"Password",
+        login:"MASUK",
+        register:"Belum punya akun?",
+        cs:"Customer Service",
+        flag:"id.png",
+        error:"Username dan Password wajib diisi"
+    },
+    en: {
+        title:"LOGIN",
+        user:"Username",
+        pass:"Password",
+        login:"LOGIN",
+        register:"Don't have an account?",
+        cs:"Customer Service",
+        flag:"en.png",
+        error:"Username and Password are required"
+    },
+    cn: {
+        title:"登录",
+        user:"用户名",
+        pass:"密码",
+        login:"登录",
+        register:"还没有账号？",
+        cs:"客服",
+        flag:"cn.png",
+        error:"请输入用户名和密码"
+    }
+};
+
+const lang=document.getElementById("language");
+const flag=document.getElementById("flag");
+
+function changeLang(value){
+    document.getElementById("title").innerText=text[value].title;
+    document.getElementById("user").placeholder=text[value].user;
+    document.getElementById("pass").placeholder=text[value].pass;
+    document.getElementById("loginBtn").innerText=text[value].login;
+    document.getElementById("registerText").childNodes[0].nodeValue=text[value].register+" ";
+    document.getElementById("csText").innerText=text[value].cs;
+    flag.src=text[value].flag;
+}
+lang.addEventListener("change",e=>changeLang(e.target.value));
+
+/* ================= LOGIN LOGIC ================= */
+document.getElementById("loginBtn").addEventListener("click",function(){
+    const username=document.getElementById("user").value.trim();
+    const password=document.getElementById("pass").value.trim();
+    const currentLang=lang.value;
+    if(username==""||password==""){
+        alert(text[currentLang].error);
+        return;
+    }
+    localStorage.setItem("isLogin","true");
+    localStorage.setItem("username",username);
+    window.location.href="home.html";
+});
+</script>
+
+</body>
+</html>
